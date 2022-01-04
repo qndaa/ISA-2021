@@ -1,5 +1,9 @@
 package com.example.backend.enums;
 
 public enum TypeOfUser {
-    ADMINISTRATOR
+    ADMINISTRATOR,
+    CLIENT,
+    BOATOWNER,
+    HOUSEOWNER,
+    INSTRUCTOR
 }
