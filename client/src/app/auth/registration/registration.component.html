@@ -10,7 +10,14 @@
     <app-input label="Address" [control]="getField('address')"></app-input>
     <app-input label="City" [control]="getField('city')"></app-input>
     <app-input label="Country" [control]="getField('country')"></app-input>
-
+    <app-input label="Phone number" [control]="getField('phoneNumber')"></app-input>
+    <label class="input-group">Choose Type of user</label>
+    <select class="input-group"  [formControl]="getField('typeOfUser')">
+      <option [ngValue]="'Client'">Client</option>
+      <option [ngValue]="'Boat Owner'">Boat Owner</option>
+      <option [ngValue]="'House Owner'">House Owner</option>
+      <option [ngValue]="'Instructor'">Instructor</option>
+    </select>
 
     <button class="btn btn-success w-100" type="submit" [disabled]="registrationForm.invalid">Submit</button>
     <label class="text-danger" *ngIf="registrationForm.errors && registrationForm.errors.passwordDontMatch">
@@ -19,4 +26,3 @@
   </form>
 
 </div>
-

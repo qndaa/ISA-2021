@@ -1,26 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { SignInModel } from 'src/app/model/SignInModel';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
-  loginForm = new  FormGroup({
+  loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(4)])
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+    ]),
   });
 
-  constructor() { }
+  constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
-    // TO DO: Send request for login.
-    console.log(this.loginForm.value);
+    const model = new SignInModel();
+    model.email = this.emailControl.value;
+    model.password = this.passwordControl.value;
+    this.authService.signIn(model);
   }
 
   castControl(control: AbstractControl) {
@@ -34,5 +44,4 @@ export class LoginComponent implements OnInit {
   get passwordControl() {
     return this.loginForm.get('password') as FormControl;
   }
-
 }
