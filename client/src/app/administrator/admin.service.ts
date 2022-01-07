@@ -19,10 +19,20 @@ export class AdminService {
         })
       );
   };
-  
+
   verifyAccount = (id: string) => {
     return this.http
       .get('http://localhost:8080/api/user/activateAccount/' + id)
+      .pipe(
+        map((responseData: any) => {
+          return responseData;
+        })
+      );
+  };
+
+  declineAccount = (id: string) => {
+    return this.http
+      .get('http://localhost:8080/api/user/declineAccount/' + id)
       .pipe(
         map((responseData: any) => {
           return responseData;

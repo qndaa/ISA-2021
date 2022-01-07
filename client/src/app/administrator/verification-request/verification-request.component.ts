@@ -21,5 +21,10 @@ export class VerificationRequestComponent implements OnInit {
       alert("User's verification request is accepted!");
     })
   }
+  onDeclineClick = (id:string) => {
+    this.adminService.declineAccount(id).subscribe(res => {
+      alert("User's verification request is declined!");
+    })
+  }
 
 }

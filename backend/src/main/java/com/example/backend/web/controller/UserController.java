@@ -53,6 +53,12 @@ public class UserController {
         httpServletResponse.setStatus(302);
     }
 
+    @GetMapping("/declineAccount/{id}")
+    public void declineAccount(@PathVariable String id) {
+        User user = userRepository.findUserById(UUID.fromString(id));
+        sender.sendDeclineEmail(id, user.getEmail());
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody CreateUserDto dto) {

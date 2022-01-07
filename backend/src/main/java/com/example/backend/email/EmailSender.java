@@ -32,4 +32,13 @@ public class EmailSender {
         message.setText(body);
         emailSender.send(message);
     }
+
+    public void sendDeclineEmail(String id, String email) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        String body = "Sorry to tell you, your account verification request has been declined";
+        message.setTo(email);
+        message.setSubject("Your account verification request has been declined!");
+        message.setText(body);
+        emailSender.send(message);
+    }
 }
