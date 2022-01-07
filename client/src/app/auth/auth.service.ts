@@ -16,7 +16,7 @@ export class AuthService {
     private apiService: ApiService,
     private config: ConfigService,
     private router: Router
-  ) {}
+  ) { }
 
   private access_token = null;
 
@@ -25,6 +25,10 @@ export class AuthService {
       .post('http://localhost:8080/api/auth', user)
       .subscribe(
         (res: any) => {
+          if (!res.isActive) {
+            alert("Vas nalog nije aktiviran jos uvek!");
+            return;
+          }
           localStorage.setItem('token', res.token);
           this.currentUser = res;
           localStorage.setItem('role', res.role);
