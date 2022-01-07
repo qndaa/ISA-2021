@@ -16,15 +16,16 @@ export class VerificationRequestComponent implements OnInit {
     })
   }
 
-  onAcceptClick = (id:string) => {
+  onAcceptClick = (id: string) => {
     this.adminService.verifyAccount(id).subscribe(res => {
       alert("User's verification request is accepted!");
+      window.location.href = '';
     })
   }
-  onDeclineClick = (id:string) => {
+  onDeclineClick = (id: string) => {
     this.adminService.declineAccount(id).subscribe(res => {
       alert("User's verification request is declined!");
+      window.location.href = '';
     })
   }
-
 }

@@ -82,6 +82,7 @@ public class UserServiceImpl implements IUserService {
         user.setRoles(getRoleForUser(roleName));
         user.setUsername(dto.getEmail());
         user.setIsActive(false);
+        user.setIsDeclined(false);
         return user;
     }
 

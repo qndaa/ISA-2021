@@ -25,10 +25,9 @@ public class EmailSender {
     public void sendAcceptingEmail(String email, String userId) {
         SimpleMailMessage message = new SimpleMailMessage();
         String url = "http://localhost:8080/api/user/activateAccount/" + userId;
-        String body = "We are excited to tell you that your account is successfully created. Please click on the" +
-                "below link to verify your account: " + url;
+        String body = "We are excited to tell you that your account is accepted.";
         message.setTo(email);
-        message.setSubject("Verification email!");
+        message.setSubject("Accepted account email!");
         message.setText(body);
         emailSender.send(message);
     }

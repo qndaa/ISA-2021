@@ -36,8 +36,8 @@ public class UserController {
         }
         try {
             if (user.getTypeOfUser() == TypeOfUser.CLIENT) {
+                System.out.println("Aca debil");
                 sender.sendVerificationEmail(user.getEmail(), user.getId().toString());
-            } else {
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -47,15 +47,16 @@ public class UserController {
     }
 
     @GetMapping("/activateAccount/{id}")
-    public void activateAccount(@PathVariable String id, HttpServletResponse httpServletResponse) {
+    public void activateAccount(@PathVariable String id) {
         User user = this.userService.updateStatus(UUID.fromString(id));
-        httpServletResponse.setHeader("Location", "http://localhost:4200/verificationRequests");
-        httpServletResponse.setStatus(302);
+
     }
 
     @GetMapping("/declineAccount/{id}")
     public void declineAccount(@PathVariable String id) {
         User user = userRepository.findUserById(UUID.fromString(id));
+        user.setIsDeclined(true);
+        userRepository.save(user);
         sender.sendDeclineEmail(id, user.getEmail());
     }
 
@@ -72,8 +73,7 @@ public class UserController {
         return new ResponseEntity<>(
                 userRepository.findAll()
                         .stream()
-                        .filter(
-                                u -> u.getTypeOfUser() != TypeOfUser.CLIENT && u.getTypeOfUser() != TypeOfUser.ADMINISTRATOR),
+                        .filter(u -> u.getIsActive() == false && u.getIsDeclined() == false && u.getTypeOfUser() != TypeOfUser.CLIENT),
                 HttpStatus.OK);
     }
 }
