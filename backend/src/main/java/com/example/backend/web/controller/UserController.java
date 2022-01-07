@@ -3,6 +3,7 @@ package com.example.backend.web.controller;
 import com.example.backend.email.EmailSender;
 import com.example.backend.enums.TypeOfUser;
 import com.example.backend.model.user.User;
+import com.example.backend.repository.UserRepository;
 import com.example.backend.service.IUserService;
 import com.example.backend.web.dto.CreateUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,6 +25,8 @@ public class UserController {
     IUserService userService;
     @Autowired
     EmailSender sender;
+    @Autowired
+    UserRepository userRepository;
 
     @PostMapping
     public ResponseEntity<?> registerUser(@RequestBody CreateUserDto dto) {
@@ -33,8 +37,7 @@ public class UserController {
         try {
             if (user.getTypeOfUser() == TypeOfUser.CLIENT) {
                 sender.sendVerificationEmail(user.getEmail(), user.getId().toString());
-            }
-            else {
+            } else {
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -46,7 +49,7 @@ public class UserController {
     @GetMapping("/activateAccount/{id}")
     public void activateAccount(@PathVariable String id, HttpServletResponse httpServletResponse) {
         User user = this.userService.updateStatus(UUID.fromString(id));
-        httpServletResponse.setHeader("Location", "http://localhost:4200/login");
+        httpServletResponse.setHeader("Location", "http://localhost:4200/verificationRequests");
         httpServletResponse.setStatus(302);
     }
 
@@ -55,5 +58,16 @@ public class UserController {
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody CreateUserDto dto) {
         User user = userService.updateUser(UUID.fromString(id), dto);
         return new ResponseEntity<>(user, user == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+    @GetMapping("/getUnverified")
+    public ResponseEntity<?> getUnverified() {
+        return new ResponseEntity<>(
+                userRepository.findAll()
+                        .stream()
+                        .filter(
+                                u -> u.getTypeOfUser() != TypeOfUser.CLIENT && u.getTypeOfUser() != TypeOfUser.ADMINISTRATOR),
+                HttpStatus.OK);
     }
 }

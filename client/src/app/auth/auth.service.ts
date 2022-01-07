@@ -26,7 +26,7 @@ export class AuthService {
       .subscribe(
         (res: any) => {
           if (!res.isActive) {
-            alert("Vas nalog nije aktiviran jos uvek!");
+            alert("Your account is not verified yet!");
             return;
           }
           localStorage.setItem('token', res.token);
@@ -37,7 +37,7 @@ export class AuthService {
         },
         (error) => {
           if (error.status === 401)
-            alert('Pogrešno korisničko ime ili lozinka');
+            alert('Wrong email or password!');
         }
       );
   }

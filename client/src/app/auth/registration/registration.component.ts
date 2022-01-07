@@ -39,7 +39,13 @@ export class RegistrationComponent implements OnInit {
   onSubmit() {
     const model = new RegistrationModel(this.registrationForm.value);
     this.registrationService.create(model).subscribe((res) => { });
-    console.log(this.registrationForm);
+    if (this.registrationForm.value.typeOfUser === "Client") {
+      alert("Account verification request has been sent, check your email and please confirm account!")
+    }
+    else {
+      alert("Your registration request has been sent to our administrators for a review, you will be notified via email on your account verification!")
+    }
+    window.location.href='/login';
   }
 
   onChange = () => {
