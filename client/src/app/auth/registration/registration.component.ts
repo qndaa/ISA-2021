@@ -22,22 +22,28 @@ export class RegistrationComponent implements OnInit {
       email: new FormControl('', [Validators.required]),
       phoneNumber: new FormControl('', [Validators.required]),
       typeOfUser: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required]),
     },
     {
       validators: [this.matchPassword.validate],
     }
   );
+  isClient: boolean = true;
   constructor(
     private matchPassword: MatchPassword,
     private registrationService: RegistrationService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onSubmit() {
     const model = new RegistrationModel(this.registrationForm.value);
-    this.registrationService.create(model).subscribe((res) => {});
+    this.registrationService.create(model).subscribe((res) => { });
     console.log(this.registrationForm);
+  }
+
+  onChange = () => {
+    this.isClient = this.registrationForm.value.typeOfUser === "Client";
   }
 
   getField(field: string): FormControl {
