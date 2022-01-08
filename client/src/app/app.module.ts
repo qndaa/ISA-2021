@@ -9,9 +9,10 @@ import { TokenInterceptor } from './interceptor/TokenInterceptor';
 import { HttpClientModule } from '@angular/common/http';
 import {SharedModule} from "./shared/shared.module";
 import {HomeModule} from "./home/home.module";
+import { VerificationRequestComponent } from './administrator/verification-request/verification-request.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, VerificationRequestComponent],
   imports: [
     HttpClientModule,
     BrowserModule,
