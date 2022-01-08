@@ -10,9 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import {SharedModule} from "./shared/shared.module";
 import {HomeModule} from "./home/home.module";
 import { VerificationRequestComponent } from './administrator/verification-request/verification-request.component';
-
+import { ProfileComponent } from './profile/profile.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [AppComponent, VerificationRequestComponent],
+  declarations: [AppComponent, VerificationRequestComponent, ProfileComponent],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -20,7 +21,9 @@ import { VerificationRequestComponent } from './administrator/verification-reque
     AuthModule,
     NavbarModule,
     SharedModule,
-    HomeModule
+    HomeModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     {

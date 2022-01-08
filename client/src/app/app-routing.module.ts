@@ -4,6 +4,8 @@ import { LoginComponent } from "./auth/login/login.component";
 import { RegistrationComponent } from "./auth/registration/registration.component";
 import { VerificationRequestComponent } from './administrator/verification-request/verification-request.component';
 import {HomeComponent} from "./home/home.component";
+import { ProfileComponent } from './profile/profile.component';
+
 
 const routes: Routes = [
   {
@@ -17,6 +19,9 @@ const routes: Routes = [
   },
   {
     path: 'verificationRequests', component: VerificationRequestComponent
+  },
+  {
+    path: 'profile/:id', component: ProfileComponent
   }
 ];
 
