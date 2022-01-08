@@ -12,8 +12,10 @@ import {HomeModule} from "./home/home.module";
 import { VerificationRequestComponent } from './administrator/verification-request/verification-request.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddAdminComponent } from './add-admin/add-admin.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 @NgModule({
-  declarations: [AppComponent, VerificationRequestComponent, ProfileComponent],
+  declarations: [AppComponent, VerificationRequestComponent, ProfileComponent, AddAdminComponent, ChangePasswordComponent],
   imports: [
     HttpClientModule,
     BrowserModule,

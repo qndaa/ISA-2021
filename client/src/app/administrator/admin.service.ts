@@ -1,11 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { RegistrationModel } from '../model/RegistrationModel';
+import { ResetPasswordModel } from '../model/ResetPasswordModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
+  resetPassword(model: ResetPasswordModel) {
+    return this.http
+      .post('http://localhost:8080/api/user/resetPassword', model);
+  }
 
 
   constructor(private http: HttpClient) { }
@@ -39,4 +45,9 @@ export class AdminService {
         })
       );
   };
+
+  addAdmin = (model: RegistrationModel) => {
+    return this.http
+      .post('http://localhost:8080/api/user/addAdmin', model);
+  }
 }

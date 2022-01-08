@@ -4,8 +4,8 @@ values ('623a2230-17fa-4fa6-b96f-291803e84f0b', true, 'marko123', false, 'Marko'
         '$2a$12$fB5RqVpYN/WUl3saxHn49Ouckh20MVcdy5Br50OchE6yr0ijgGWse', 0, '+381-64-123-11-11', 'Bulevar 3', 'Novi Sad',
         'Srbija');
 
-insert into administrators(id)
-values ('623a2230-17fa-4fa6-b96f-291803e84f0b');
+insert into administrators(id, is_first_login)
+values ('623a2230-17fa-4fa6-b96f-291803e84f0b', false);
 
 insert into roles (id, deleted, name)
 values ('380b2cf1-7f15-4694-8fb7-9a3246a10691', false, 'ROLE_ADMINISTRATOR'),
