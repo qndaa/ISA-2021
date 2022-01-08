@@ -44,7 +44,6 @@ public class UserController {
         }
         try {
             if (user.getTypeOfUser() == TypeOfUser.CLIENT) {
-                System.out.println("Aca debil");
                 sender.sendVerificationEmail(user.getEmail(), user.getId().toString());
             }
         } catch (Exception e) {
