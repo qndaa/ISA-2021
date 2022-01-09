@@ -26,6 +26,21 @@ export class AdminService {
       );
   };
 
+  getAllUsers = () => {
+    return this.http
+      .get('http://localhost:8080/api/user/getAllUsers')
+      .pipe(
+        map((responseData: any) => {
+          return responseData;
+        })
+      );
+  };
+
+  deleteUser = (id: string) => {
+    return this.http
+      .get('http://localhost:8080/api/user/deleteUser/' + id);
+  };
+
   verifyAccount = (id: string) => {
     return this.http
       .get('http://localhost:8080/api/user/activateAccount/' + id)

@@ -7,6 +7,7 @@ import { HomeComponent } from "./home/home.component";
 import { ProfileComponent } from './profile/profile.component';
 import { AddAdminComponent } from './add-admin/add-admin.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { DeleteUsersComponent } from './administrator/delete-users/delete-users.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,9 @@ const routes: Routes = [
   },
   {
     path: 'changePassword', component: ChangePasswordComponent
+  },
+  {
+    path: 'deleteUsers', component: DeleteUsersComponent
   }
 ];
 

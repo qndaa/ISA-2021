@@ -42,7 +42,15 @@ public class UserController {
     public ResponseEntity<?> getById(@PathVariable UUID id) {
         CreateUserDto user = userService.getById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+    @GetMapping("/deleteUser/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable String id) {
+        User user = userRepository.findUserById(UUID.fromString(id));
+        user.setDeleted(true);
+        userRepository.save(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping
@@ -79,7 +87,6 @@ public class UserController {
         return new ResponseEntity<>(admin, admin == null ? HttpStatus.BAD_REQUEST : HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
     @GetMapping("/activateAccount/{id}")
     public void activateAccount(@PathVariable String id) {
         User user = this.userService.updateStatus(UUID.fromString(id));
@@ -108,6 +115,16 @@ public class UserController {
                 userRepository.findAll()
                         .stream()
                         .filter(u -> u.getIsActive() == false && u.getIsDeclined() == false && u.getTypeOfUser() != TypeOfUser.CLIENT),
+                HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<?> getAllUsers() {
+        return new ResponseEntity<>(
+                userRepository.findAll()
+                        .stream()
+                        .filter(u -> u.getTypeOfUser() != TypeOfUser.ADMINISTRATOR && u.getIsActive() == true),
                 HttpStatus.OK);
     }
 }

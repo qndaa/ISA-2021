@@ -40,6 +40,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
                 .authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User data = (User) authentication.getPrincipal();
+
         Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) authentication.getAuthorities();
         String jwt = tokenUtils.generateToken(data.getUsername(), authorities);
         int expiresIn = tokenUtils.getExpiredIn();
@@ -49,7 +50,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
             boolean isFirstLogin = admin.isFirstLogin;
             return new AuthResponse(data.getId(), data.getUsername(), jwt, data.getRoles().iterator().next().getName(), expiresIn, data.getIsActive(), isFirstLogin);
         }
-
 
         AuthResponse responseDTO = new AuthResponse(data.getId(), data.getUsername(), jwt, data.getRoles().iterator().next().getName(), expiresIn, data.getIsActive(), false);
         return responseDTO;

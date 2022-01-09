@@ -2,6 +2,7 @@ package com.example.backend.model;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -21,5 +22,5 @@ public abstract class DefaultModel {
     private UUID id;
 
     @Column(name = "deleted", nullable = false)
-    private final Boolean deleted = false;
+    private Boolean deleted = false;
 }

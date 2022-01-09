@@ -4,6 +4,8 @@
         <a class="btn btn-outline-success mx-2" routerLink="/" routerLinkActive="active">Home</a>
         <a *ngIf="this.authService.getRole() === 'ROLE_ADMINISTRATOR' && this.authService.getIsFirstLogin() == 'false'" class="btn btn-outline-success" routerLink="/verificationRequests">Verification requests</a>
         <a *ngIf="this.authService.getRole() === 'ROLE_ADMINISTRATOR' && this.authService.getIsFirstLogin() == 'false'" style="margin-left: 7px" class="btn btn-outline-success" routerLink="/addAdmin">Add administrator</a>
+        <a *ngIf="this.authService.getRole() === 'ROLE_ADMINISTRATOR' && this.authService.getIsFirstLogin() == 'false'" style="margin-left: 7px" class="btn btn-outline-success" routerLink="/deleteUsers">Delete users</a>
+
     </div>
     <form class="form-inline">
         <a *ngIf="!this.authService.isLoggedIn" class="btn btn-outline-success my-2 my-sm-0" type="submit" routerLink="/registration" routerLinkActive="active">Sing Up</a>
