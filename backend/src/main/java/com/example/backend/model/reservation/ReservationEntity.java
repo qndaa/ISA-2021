@@ -6,6 +6,7 @@ import lombok.Data;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -25,4 +26,9 @@ public class ReservationEntity extends DefaultModel {
 
     private TypeOfEntity type;
 
+    @OneToMany(mappedBy="reservation")
+    private Set<Reservation> reservations;
+
+    @OneToMany(mappedBy="reservation")
+    private Set<AvailableDay> availableDays;
 }

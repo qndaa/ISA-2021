@@ -1,16 +1,14 @@
 package com.example.backend.web.dto;
-import lombok.Data;
-
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.UUID;
+import lombok.Data;
 
 @Data
-public class ReservationDTO {
+public class AvailableDayDTO {
     private Date startDate;
     private LocalTime startTime;
-    private Integer numberOfDay;
+    private Date endDate;
+    private LocalTime endTime;
     private UUID reservationEntityId;
-    private UUID userId;
-    private Integer type;
 }

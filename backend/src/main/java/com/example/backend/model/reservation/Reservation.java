@@ -5,10 +5,7 @@ import com.example.backend.model.DefaultModel;
 import com.example.backend.model.user.User;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -18,9 +15,16 @@ public class Reservation extends DefaultModel {
     @OneToOne
     @JoinColumn(name = "term_id", referencedColumnName = "id")
     private Term term;
+
     private Double price;
+
     private StatusOfReservation statusOfReservation;
+
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name="reservation_entyty_id")
+    private ReservationEntity reservation;
 }
