@@ -37,7 +37,7 @@ public class UserController {
     @Autowired
     AdministratorRepository administratorRepository;
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_CLIENT','ROLE_HOUSE_OWNER','ROLE_BOAT_OWNER','ROLE_INSTRUCTOR')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {
         CreateUserDto user = userService.getById(id);
@@ -101,7 +101,7 @@ public class UserController {
         sender.sendDeclineEmail(id, user.getEmail());
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR','ROLE_CLIENT','ROLE_HOUSE_OWNER','ROLE_BOAT_OWNER','ROLE_INSTRUCTOR')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody CreateUserDto dto) {
         User user = userService.updateUser(UUID.fromString(id), dto);
