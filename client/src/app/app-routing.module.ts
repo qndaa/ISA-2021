@@ -11,7 +11,7 @@ import { DeleteUsersComponent } from './administrator/delete-users/delete-users.
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent
+    path: 'home', component: HomeComponent
   },
   {
     path: 'login', component: LoginComponent
