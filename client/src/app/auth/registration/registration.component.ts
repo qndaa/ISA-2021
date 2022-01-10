@@ -45,7 +45,7 @@ export class RegistrationComponent implements OnInit {
     else {
       alert("Your registration request has been sent to our administrators for a review, you will be notified via email on your account verification!")
     }
-    window.location.href='/login';
+    window.location.href = '/login';
   }
 
   onChange = () => {

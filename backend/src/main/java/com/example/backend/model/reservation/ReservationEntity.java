@@ -6,6 +6,8 @@ import lombok.Data;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.HashSet;
+
 import java.util.Set;
 
 @Data
@@ -31,4 +33,10 @@ public class ReservationEntity extends DefaultModel {
 
     @OneToMany(mappedBy="reservation")
     private Set<AvailableDay> availableDays;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservationEntity")
+    private Set<Picture> pictures = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservationEntity")
+    private Set<ReservationEntityRule> reservationEntityRules = new HashSet<>();
+
 }
