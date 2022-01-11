@@ -9,6 +9,7 @@ import { AdminService } from '../admin.service';
 })
 export class DeleteAccountRequestsComponent implements OnInit {
   deleteRequests: any;
+  public message: string = '';
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
@@ -20,16 +21,18 @@ export class DeleteAccountRequestsComponent implements OnInit {
   onAcceptClick = (id: string) => {
     const model = new DeleteRequestModel();
     model.deleteRequestId = id;
-    this.adminService.verifyAccount(id).subscribe(res => {
-      alert("User's verification request is accepted!");
+    model.message = this.message;
+    this.adminService.acceptDeleteRequest(model).subscribe(res => {
+      alert("User's delete account request is accepted!");
       window.location.href = '';
     })
   }
   onDeclineClick = (id: string) => {
     const model = new DeleteRequestModel();
     model.deleteRequestId = id;
-    this.adminService.declineAccount(id).subscribe(res => {
-      alert("User's verification request is declined!");
+    model.message = this.message;
+    this.adminService.declineDeleteRequest(model).subscribe(res => {
+      alert("User's delete account request is declined!");
       window.location.href = '';
     });
   }

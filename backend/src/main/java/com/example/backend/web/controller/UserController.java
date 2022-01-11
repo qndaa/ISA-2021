@@ -58,7 +58,6 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
     @GetMapping("/requestDelete/{id}")
     public ResponseEntity<?> requestDelete(@PathVariable String id) {
         User user = userRepository.findUserById(UUID.fromString(id));
@@ -67,6 +66,7 @@ public class UserController {
         deleteAccountRequest.setFullName(user.getFirstName() + " " + user.getLastName());
         deleteAccountRequest.setUserId(user.getId());
         deleteAccountRequest.setTypeOfUser(user.getTypeOfUser().toString());
+        deleteAccountRequest.setAnswered(false);
         deleteAccountRequestRepository.save(deleteAccountRequest);
         return new ResponseEntity<>(deleteAccountRequest, HttpStatus.OK);
     }
@@ -74,7 +74,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
     @PostMapping("/acceptDeleteRequest")
     public ResponseEntity<?> acceptRequest(@RequestBody DeleteAccountDto dto) {
-        DeleteAccountRequest deleteAccountRequest = deleteAccountRequestRepository.getById(UUID.fromString(dto.getDeleteRequestId()));
+        DeleteAccountRequest deleteAccountRequest = deleteAccountRequestRepository.findById(UUID.fromString(dto.getDeleteRequestId())).get();
         User user = userRepository.findUserById(deleteAccountRequest.getUserId());
         user.setDeleted(true);
         userRepository.save(user);
@@ -87,7 +87,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
     @PostMapping("/declineDeleteRequest")
     public ResponseEntity<?> declineRequest(@RequestBody DeleteAccountDto dto) {
-        DeleteAccountRequest deleteAccountRequest = deleteAccountRequestRepository.getById(UUID.fromString(dto.getDeleteRequestId()));
+        DeleteAccountRequest deleteAccountRequest = deleteAccountRequestRepository.findById(UUID.fromString(dto.getDeleteRequestId())).get();
         User user = userRepository.findUserById(deleteAccountRequest.getUserId());
         deleteAccountRequest.setAnswered(true);
         deleteAccountRequestRepository.save(deleteAccountRequest);
@@ -98,7 +98,8 @@ public class UserController {
 
     @GetMapping("/deleteRequests")
     public ResponseEntity<?> getDeleteRequests() {
-        return new ResponseEntity<>(deleteAccountRequestRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(deleteAccountRequestRepository.findAll().stream()
+                .filter(req -> req.isAnswered() == false), HttpStatus.OK);
     }
 
     @PostMapping
