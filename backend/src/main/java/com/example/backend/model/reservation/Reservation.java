@@ -6,6 +6,8 @@ import com.example.backend.model.user.User;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -27,4 +29,9 @@ public class Reservation extends DefaultModel {
     @ManyToOne
     @JoinColumn(name="reservation_entyty_id")
     private ReservationEntity reservation;
+
+    private Integer numberOfPersons;
+
+    @ElementCollection
+    private List<String> additionalService = new ArrayList<String>();
 }

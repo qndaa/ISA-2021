@@ -17,7 +17,7 @@ import java.util.Set;
 @Table(name = "reservation_entity")
 public class ReservationEntity extends DefaultModel {
 
-    private String title;
+    private String name;
 
     @Column(length = 4096)
     private String description;
@@ -33,10 +33,12 @@ public class ReservationEntity extends DefaultModel {
 
     @OneToMany(mappedBy="reservation")
     private Set<AvailableDay> availableDays;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservationEntity")
     private Set<Picture> pictures = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservationEntity")
     private Set<ReservationEntityRule> reservationEntityRules = new HashSet<>();
 
+    private Double price;
 }
