@@ -41,4 +41,34 @@ export class ReservationService {
       }));
   }
 
+  reservAction(data:any) {
+    return this.http.post("http://localhost:8080/api/reservations/action", data)
+      .pipe(map(res => {
+        return res;
+      }));
+  }
+
+  getAllAction(id:any) {
+    return this.http.get("http://localhost:8080/api/reservations/action/" + id)
+      .pipe(map(res => {
+        return res;
+      }));
+  }
+
+  getAllReservationByUser(id:any) {
+    return this.http.get("http://localhost:8080/api/reservations/users/" + id)
+      .pipe(map(res => {
+        return res;
+      }));
+  }
+
+
+  delete(id:any) {
+    return this.http.delete("http://localhost:8080/api/reservations/" + id)
+      .pipe(map(res => {
+        return res;
+      }));
+  }
+
+
 }

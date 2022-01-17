@@ -4,13 +4,21 @@ import com.example.backend.enums.StatusOfReservation;
 import com.example.backend.model.DefaultModel;
 import com.example.backend.model.user.User;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Data
 @Entity
+@Where(clause = "deleted = 'false'")
 @Table(name = "reservations")
 public class Reservation extends DefaultModel {
 
@@ -23,7 +31,7 @@ public class Reservation extends DefaultModel {
     private StatusOfReservation statusOfReservation;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = true)
     private User user;
 
     @ManyToOne
@@ -31,6 +39,8 @@ public class Reservation extends DefaultModel {
     private ReservationEntity reservation;
 
     private Integer numberOfPersons;
+
+    private Integer discount;
 
     @ElementCollection
     private List<String> additionalService = new ArrayList<String>();

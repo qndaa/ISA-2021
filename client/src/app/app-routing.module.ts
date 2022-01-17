@@ -11,6 +11,9 @@ import { DeleteUsersComponent } from './administrator/delete-users/delete-users.
 import { DeleteEntitiesComponent } from './administrator/delete-entities/delete-entities.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import { DeleteAccountRequestsComponent } from './administrator/delete-account-requests/delete-account-requests.component';
+import { IncomeComponent } from './administrator/income/income.component';
+import {ReservationPageComponent} from './reservation-page/reservation-page.component'
+import {AllReservationComponent} from './all-reservation/all-reservation.component'
 
 const routes: Routes = [
   {
@@ -56,6 +59,18 @@ const routes: Routes = [
   {
     path: 'deleteAccReq',
     component: DeleteAccountRequestsComponent,
+  },
+  {
+    path: 'income',
+    component: IncomeComponent,
+  },
+  {
+    path: 'action/:id',
+    component: ReservationPageComponent,
+  },
+  {
+    path: 'all-reservation',
+    component: AllReservationComponent,
   },
 ];
 
