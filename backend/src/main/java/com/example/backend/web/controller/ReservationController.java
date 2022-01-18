@@ -103,6 +103,7 @@ public class ReservationController {
             rdt.setAnswer(r.getAnswer());
             rdt.setComplaint(r.getComplaint());
             rdt.setStatus(r.getStatus());
+            rdt.setStatusOfComplaint(r.getStatusOfComplaint());
             dto.add(rdt);
         }
         return ResponseEntity.ok().body(dto);

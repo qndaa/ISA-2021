@@ -22,8 +22,8 @@
         <div class="col-6">
           <form  (ngSubmit)="onSubmitComplaint(item)">
             <label>Zalba:</label>
-            <textarea [(ngModel)]="item.complaint" [ngModelOptions]="{standalone: true}" ></textarea>
-            <button class="btn btn-outline-success" type="submit">Posalji zalbu</button>
+            <textarea [(ngModel)]="item.complaint" [ngModelOptions]="{standalone: true}" [readonly]="item.statusOfComplaint"></textarea>
+            <button *ngIf="!item.statusOfComplaint" class="btn btn-outline-success" type="submit">Posalji zalbu</button>
           </form>
 
         </div>
@@ -32,7 +32,7 @@
             <label>Revizija:</label>
             <textarea [(ngModel)]="item.revision" [ngModelOptions]="{standalone: true}" [readonly]="item.status"></textarea>
             <input class="my-1" type="number" [(ngModel)]="item.mark" [ngModelOptions]="{standalone: true}" [readonly]="item.status"/>
-            <button class="btn btn-outline-success" type="submit" *ngIf="!item.status">Posalji reviziju</button>
+            <button class="btn btn-outline-success" type="submit" *ngIf="!item.status" >Posalji reviziju</button>
           </form>
         </div>
       </div>

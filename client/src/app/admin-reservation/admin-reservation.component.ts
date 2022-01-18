@@ -33,7 +33,8 @@ export class AdminReservationComponent implements OnInit {
     this.reservationService.createComplaint({
       id: item.id,
       complaint: item.complaint,
-      answer: item.answer
+      answer: item.answer,
+      status: 1
     }).subscribe(response => {
       this.reservationService.queryAll().subscribe(response => {
         alert("Odgovor se poslao!")

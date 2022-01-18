@@ -1,6 +1,7 @@
 package com.example.backend.service.impl;
 
 import com.example.backend.email.EmailSender;
+import com.example.backend.enums.StatusOfComplaint;
 import com.example.backend.enums.StatusOfReservation;
 import com.example.backend.enums.StatusOfRevision;
 import com.example.backend.model.reservation.AvailableDay;
@@ -128,6 +129,7 @@ public class ReservationServiceImpl implements IReservationService {
             rdt.setAnswer(r.getAnswer());
             rdt.setComplaint(r.getComplaint());
             rdt.setStatus(r.getStatus());
+            rdt.setStatusOfComplaint(r.getStatusOfComplaint());
 
             dtos.add(rdt);
         }
@@ -142,9 +144,14 @@ public class ReservationServiceImpl implements IReservationService {
         r.setMark(dto.getMark());
         if (dto.getStatus() == null) {
             r.setStatus(StatusOfRevision.HOLD_ON);
+            sender.sendComplaint("marko@gmail.com", "Nova revizija: " + r.getRevision());
         } else if (dto.getStatus() == 1) {
             r.setStatus(StatusOfRevision.ACCEPTED);
+            sender.sendComplaint(r.getUser().getEmail(),  "Prihvacena revizija: " + r.getRevision());
+
         } else if (dto.getStatus() == 0) {
+            sender.sendComplaint(r.getUser().getEmail(),  "Odbijena revizija: " + r.getRevision());
+
             r.setStatus(StatusOfRevision.DECLINED);
         }
         return reservationRepository.save(r);
@@ -155,6 +162,14 @@ public class ReservationServiceImpl implements IReservationService {
         Reservation r = reservationRepository.getById(dto.getId());
         r.setComplaint(dto.getComplaint());
         r.setAnswer(dto.getAnswer());
+        if (dto.getStatus() == 0) {
+            r.setStatusOfComplaint(StatusOfComplaint.SEND);
+            sender.sendComplaint("marko@gmail.com", "Nova zalba: " + r.getComplaint());
+        } else if (dto.getStatus() == 1) {
+            r.setStatusOfComplaint(StatusOfComplaint.ANSWERED);
+            sender.sendComplaint(r.getUser().getEmail(), "Odgovor na zalbu: " + r.getAnswer());
+
+        }
         return reservationRepository.save(r);
     }
 

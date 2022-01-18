@@ -23,16 +23,16 @@
             <label>Zalba:</label>
             <textarea [(ngModel)]="item.complaint" [ngModelOptions]="{standalone: true}" [readonly]="true" ></textarea>
             <label>Odgovor:</label>
-            <textarea [(ngModel)]="item.answer" [ngModelOptions]="{standalone: true}" ></textarea>
-            <button class="btn btn-outline-success" type="submit" (click)="sendAnswer(item)">Posalji odgovor</button>
+            <textarea [(ngModel)]="item.answer" [ngModelOptions]="{standalone: true}" [readonly]="item.statusOfComplaint === 'ANSWERED'"></textarea>
+            <button class="btn btn-outline-success" type="submit" (click)="sendAnswer(item)" *ngIf="item.statusOfComplaint !== 'ANSWERED'">Posalji odgovor</button>
           </form>
 
         </div>
         <div class="col-6">
           <form *ngIf="item.revision">
             <label>Revizija:</label>
-            <textarea [(ngModel)]="item.revision" [ngModelOptions]="{standalone: true}" ></textarea>
-            <input class="my-1" type="number" [(ngModel)]="item.mark" [ngModelOptions]="{standalone: true}" />
+            <textarea [(ngModel)]="item.revision" [ngModelOptions]="{standalone: true}" [readonly]="true"></textarea>
+            <input class="my-1" type="number" [(ngModel)]="item.mark" [ngModelOptions]="{standalone: true}" [readonly]="true" />
             <button *ngIf="item.status === 'HOLD_ON'" class="btn btn-outline-success" (click)="accept(item)" type="submit">Odobri</button>
             <button *ngIf="item.status === 'HOLD_ON'" class="btn btn-outline-danger ms-3" (click)="decline(item)" type="submit">Odbij</button>
             <label *ngIf="item.status !== 'HOLD_ON'">Status: {{item.status}}</label>

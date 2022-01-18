@@ -1,5 +1,6 @@
 package com.example.backend.web.dto;
 
+import com.example.backend.enums.StatusOfComplaint;
 import com.example.backend.enums.StatusOfRevision;
 import lombok.Data;
 
@@ -20,6 +21,7 @@ public class ReservationDTO2 {
     private String complaint;
     private String answer;
     private String revision;
+    private StatusOfComplaint statusOfComplaint;
     Integer mark;
     StatusOfRevision status;
 }

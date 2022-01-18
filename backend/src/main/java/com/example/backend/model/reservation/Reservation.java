@@ -1,5 +1,6 @@
 package com.example.backend.model.reservation;
 
+import com.example.backend.enums.StatusOfComplaint;
 import com.example.backend.enums.StatusOfReservation;
 import com.example.backend.enums.StatusOfRevision;
 import com.example.backend.model.DefaultModel;
@@ -53,6 +54,8 @@ public class Reservation extends DefaultModel {
 
     @Column(length = 4096)
     private String answer;
+
+    private StatusOfComplaint statusOfComplaint;
 
     @Column(length = 4096)
     private String revision;
