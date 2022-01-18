@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
-import { ReservationService } from '../reservation/reservation.service';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ReservationService} from "../reservation/reservation.service";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
-  selector: 'app-all-reservation',
-  templateUrl: './all-reservation.component.html',
-  styleUrls: ['./all-reservation.component.css']
+  selector: 'app-admin-reservation',
+  templateUrl: './admin-reservation.component.html',
+  styleUrls: ['./admin-reservation.component.css']
 })
-export class AllReservationComponent implements OnInit {
+export class AdminReservationComponent implements OnInit {
 
   list:any[] = [];
 
@@ -16,8 +15,9 @@ export class AllReservationComponent implements OnInit {
   constructor(private reservationService:ReservationService, private authService:AuthService) {}
 
   ngOnInit(): void {
-    this.reservationService.getAllReservationByUser(this.authService.getId()).subscribe((res:any)=>{
-      for(let action of res){
+    this.reservationService.queryAll().subscribe(response => {
+      this.list = []!;
+      for(let action of response.body!){
         let startTime = action.startTime[0] + ":" + action.startTime[1];
         let endtime = action.endTime[0] + ":" + action.endTime[1];
         action.startTime = startTime;
@@ -29,11 +29,16 @@ export class AllReservationComponent implements OnInit {
     })
   }
 
-  decline = (id:any) =>{
-    this.reservationService.delete(id).subscribe((res)=>{
-      this.list = [];
-      this.reservationService.getAllReservationByUser(this.authService.getId()).subscribe((res:any)=>{
-        for(let action of res){
+  sendAnswer(item: any) {
+    this.reservationService.createComplaint({
+      id: item.id,
+      complaint: item.complaint,
+      answer: item.answer
+    }).subscribe(response => {
+      this.reservationService.queryAll().subscribe(response => {
+        alert("Odgovor se poslao!")
+        this.list = []!;
+        for(let action of response.body!){
           let startTime = action.startTime[0] + ":" + action.startTime[1];
           let endtime = action.endTime[0] + ":" + action.endTime[1];
           action.startTime = startTime;
@@ -43,20 +48,23 @@ export class AllReservationComponent implements OnInit {
           this.list.push(action);
         }
       })
-      alert("Successfuly");
-    })
+    });
+
+
+
 
   }
-
-
-
-  onSubmitComplaint(item: any) {
-
-    this.reservationService.createComplaint({id: item.id, complaint: item.complaint}).subscribe(response => {
-      alert("Zalba poslata!");
-      this.list = [];
-      this.reservationService.getAllReservationByUser(this.authService.getId()).subscribe((res:any)=>{
-        for(let action of res){
+  accept(item: any) {
+    this.reservationService.createRevision({
+      id: item.id,
+      revision: item.revision,
+      mark: item.mark,
+      status: 1
+    }).subscribe(response => {
+      this.reservationService.queryAll().subscribe(response => {
+        alert("Prihvacena revizija!")
+        this.list = []!;
+        for(let action of response.body!){
           let startTime = action.startTime[0] + ":" + action.startTime[1];
           let endtime = action.endTime[0] + ":" + action.endTime[1];
           action.startTime = startTime;
@@ -66,18 +74,20 @@ export class AllReservationComponent implements OnInit {
           this.list.push(action);
         }
       })
-    })
+    });
   }
 
-
-  onSubmitRevision(item: any) {
-
-    this.reservationService.createRevision({id: item.id, revision: item.revision, mark: item.mark}).subscribe(response => {
-      console.log(response);
-      alert('Revizija sacuvana!');
-      this.list = [];
-      this.reservationService.getAllReservationByUser(this.authService.getId()).subscribe((res:any)=>{
-        for(let action of res){
+  decline(item: any) {
+    this.reservationService.createRevision({
+      id: item.id,
+      revision: item.revision,
+      mark: item.mark,
+      status: 0
+    }).subscribe(response => {
+      this.reservationService.queryAll().subscribe(response => {
+        alert("OOdbijena revizija!")
+        this.list = []!;
+        for(let action of response.body!){
           let startTime = action.startTime[0] + ":" + action.startTime[1];
           let endtime = action.endTime[0] + ":" + action.endTime[1];
           action.startTime = startTime;
@@ -87,7 +97,6 @@ export class AllReservationComponent implements OnInit {
           this.list.push(action);
         }
       })
-    })
+    });
   }
-
 }
